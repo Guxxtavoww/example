@@ -1,22 +1,22 @@
 import { z } from 'zod';
 
 export const userResponseSchema = z.object({
-  user_id: z.number(),
-  user_name: z.string().optional(),
-  email: z.string(),
-  profile_pic_url: z.string().optional(),
-  created_at: z.date(),
-  updated_at: z.date().optional(),
+  user_id: z.number().optional().nullable(),
+  user_name: z.string().optional().nullable(),
+  email: z.string().email(),
+  profile_pic_url: z.string().optional().nullable(),
+  created_at: z.date().optional().nullable(),
+  updated_at: z.date().optional().nullable(),
 });
 
 export const userSchema = z.object({
-  user_id: z.number(),
-  user_name: z.string().optional(),
-  email: z.string(),
-  password: z.string().nonempty().max(18),
-  profile_pic_url: z.string().optional(),
-  created_at: z.date().optional(),
-  updated_at: z.date().optional(),
+  user_id: z.number().optional().nullable(),
+  user_name: z.string().optional().nullable(),
+  email: z.string().email(),
+  password: z.string().max(18).optional(),
+  profile_pic_url: z.string().optional().nullable(),
+  created_at: z.date().optional().nullable(),
+  updated_at: z.date().optional().nullable(),
 });
 
 export const usersResponseSchema = z.array(userResponseSchema);

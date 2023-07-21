@@ -129,4 +129,16 @@ export class UsersService {
       throw new InternalServerErrorException('FAIL TO EDIT USER');
     }
   }
+
+  async deleteUser(user_id: number) {
+    try {
+      await this.databaseService.users_table.delete({
+        where: {
+          user_id,
+        },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException('FAIL TO DELETE USER' + error);
+    }
+  }
 }

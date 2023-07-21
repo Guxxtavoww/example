@@ -1,9 +1,18 @@
-import { Controller, Get, Param, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  BadRequestException,
+  Delete,
+  Body,
+  Put,
+  Post,
+} from '@nestjs/common';
 
 import { requestDataValidation } from 'src/shared/utils';
 
 import { UsersService } from './users.service';
-import { userIdSchema } from './dto/users-common.dto';
+import { userIdSchema, userSchema } from './dto/users-common.dto';
 
 @Controller('users')
 export class UsersController {
@@ -23,5 +32,30 @@ export class UsersController {
     }
 
     return await this.usersService.getOneUser(id);
+  }
+
+  @Post('')
+  async createUser(@Body() userData: unknown) {
+    const correctUserData = requestDataValidation(userData, userSchema);
+
+    return await this.usersService.registerUser(correctUserData);
+  }
+
+  @Put('')
+  async editUser(@Body() userData: unknown) {
+    const correctUserData = requestDataValidation(userData, userSchema);
+
+    return await this.usersService.editUser(correctUserData);
+  }
+
+  @Delete(':user_id')
+  async deleteUser(@Param('user_id') user_id: string) {
+    const id = requestDataValidation(user_id, userIdSchema);
+
+    if (id === null) {
+      throw new BadRequestException('ID NOT VALID');
+    }
+
+    return await this.usersService.deleteUser(id);
   }
 }

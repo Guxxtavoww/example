@@ -6,4 +6,4 @@ import { DatabaseModule } from '../shared/modules/database/database.module';
 @Module({
   imports: [DatabaseModule, UsersModule],
 })
-export class SharedModule {}
+export class ModulesModule {}
