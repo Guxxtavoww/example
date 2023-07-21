@@ -24,3 +24,14 @@ export const usersResponseSchema = z.array(userResponseSchema);
 export type UserType = z.infer<typeof userSchema>;
 
 export type UserResponse = z.infer<typeof userResponseSchema>;
+
+export const userIdSchema = z
+  .string()
+  .nonempty()
+  .transform((user_id) => {
+    const newValue = Number(user_id);
+
+    if (Number.isNaN(newValue)) return null;
+
+    return newValue;
+  });
